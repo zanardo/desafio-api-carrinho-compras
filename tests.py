@@ -3,7 +3,7 @@ Testes de unidade do projeto.
 """
 
 import unittest
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from api_carrinho.models.carrinho import Carrinho
 
