@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 
 from api_carrinho.models.carrinho import Carrinho
+from api_carrinho.models.produto import Produto
 
 
 class TestModelsCarrinho(unittest.TestCase):
@@ -13,13 +14,26 @@ class TestModelsCarrinho(unittest.TestCase):
         "Teste de criação de um novo carrinho"
         carrinho = Carrinho(cliente=None)
         self.assertIsNone(carrinho.cliente)
-        self.assertListEqual(carrinho.produtos, [])
+        self.assertEqual(carrinho.produtos, {})
         self.assertEqual(len(carrinho.codigo), 36)
         self.assertRegex(
             carrinho.codigo,
             r"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
         )
         self.assertEqual((datetime.now() - carrinho.data_alteracao).days, 0)
+
+    def test_adiciona_produto(self):
+        "Teste de adição de produto ao carrinho"
+        carrinho = Carrinho(cliente=None)
+        produto = Produto(
+            codigo="AB1234567",
+            descricao="Descrição",
+            preco_de=100.0,
+            preco_por=90.0,
+            quantidade=1,
+        )
+        carrinho.adiciona_produto(produto)
+        self.assertTrue(len(carrinho.produtos), 1)
 
 
 if __name__ == "__main__":
