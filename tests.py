@@ -52,6 +52,21 @@ class TestModelsCarrinho(unittest.TestCase):
         self.assertEqual(len(carrinho.produtos), 1)
         self.assertEqual(carrinho.produtos[produto.codigo].quantidade, 2)
 
+    def test_remove_produto(self):
+        "Teste de remoção de produto do carrinho"
+        carrinho = Carrinho(cliente=None)
+        produto = Produto(
+            codigo="AB1234567",
+            descricao="Descrição",
+            preco_de=100.0,
+            preco_por=90.0,
+            quantidade=1,
+        )
+        carrinho.adiciona_produto(produto)
+        self.assertEqual(len(carrinho.produtos), 1)
+        carrinho.remove_produto(produto.codigo)
+        self.assertEqual(len(carrinho.produtos), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

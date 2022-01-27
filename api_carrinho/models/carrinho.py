@@ -43,3 +43,10 @@ class Carrinho:
                 self.produtos[produto.codigo].quantidade + 1
             )
         self.produtos[produto.codigo] = produto
+
+    def remove_produto(self, codigo: str) -> None:
+        """
+        Remove um produto do carrinho, dado seu código.
+        """
+        if codigo in self.produtos:
+            del self.produtos[codigo]
