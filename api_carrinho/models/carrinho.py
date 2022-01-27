@@ -50,3 +50,9 @@ class Carrinho:
         """
         if codigo in self.produtos:
             del self.produtos[codigo]
+
+    def remove_todos_produtos(self):
+        """
+        Remove todos os produtos do carrinho.
+        """
+        self.produtos = {}
