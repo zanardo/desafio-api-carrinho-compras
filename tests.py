@@ -9,6 +9,32 @@ from api_carrinho.models.carrinho import Carrinho
 from api_carrinho.models.produto import Produto
 
 
+class TestModelsProduto(unittest.TestCase):
+    def _new(self) -> Produto:
+        return Produto(
+            codigo="B33F0123456",
+            descricao="Produto Teste",
+            preco_de=10.0,
+            preco_por=10.00,
+            quantidade=3,
+        )
+
+    def test_new(self):
+        "Teste de criação de um produto"
+        _ = self._new()
+
+    def test_define_quantidade(self):
+        "Teste de definição de quantidade de um produto"
+        produto = self._new()
+        self.assertEqual(produto.quantidade, 3)
+        produto.define_quantidade(100)
+        self.assertEqual(produto.quantidade, 100)
+        with self.assertRaises(ValueError):
+            produto.define_quantidade(0)
+        with self.assertRaises(ValueError):
+            produto.define_quantidade(-1)
+
+
 class TestModelsCarrinho(unittest.TestCase):
     def test_new(self):
         "Teste de criação de um novo carrinho"
