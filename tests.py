@@ -35,6 +35,23 @@ class TestModelsCarrinho(unittest.TestCase):
         carrinho.adiciona_produto(produto)
         self.assertTrue(len(carrinho.produtos), 1)
 
+    def test_adiciona_produto_existente(self):
+        "Teste de adição de produto já existente ao carrinho"
+        carrinho = Carrinho(cliente=None)
+        produto = Produto(
+            codigo="AB1234567",
+            descricao="Descrição",
+            preco_de=100.0,
+            preco_por=90.0,
+            quantidade=1,
+        )
+        carrinho.adiciona_produto(produto)
+        self.assertTrue(len(carrinho.produtos), 1)
+        self.assertEqual(carrinho.produtos[produto.codigo].quantidade, 1)
+        carrinho.adiciona_produto(produto)
+        self.assertTrue(len(carrinho.produtos), 1)
+        self.assertEqual(carrinho.produtos[produto.codigo].quantidade, 2)
+
 
 if __name__ == "__main__":
     unittest.main()

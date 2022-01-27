@@ -35,9 +35,11 @@ class Carrinho:
 
     def adiciona_produto(self, produto: Produto) -> None:
         """
-        Adiciona um produto ao carrinho. Caso o produto já exista, o processo é ignorado.
-        Para alterar a quantidade, use a rotina define_quantidade!
+        Adiciona um produto ao carrinho. Caso o produto já exista, apenas a quantidade é
+        acrescida de 1.
         """
         if produto.codigo in self.produtos:
-            return
+            self.produtos[produto.codigo].define_quantidade(
+                self.produtos[produto.codigo].quantidade + 1
+            )
         self.produtos[produto.codigo] = produto
