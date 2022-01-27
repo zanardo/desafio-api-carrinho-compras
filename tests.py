@@ -46,10 +46,10 @@ class TestModelsCarrinho(unittest.TestCase):
             quantidade=1,
         )
         carrinho.adiciona_produto(produto)
-        self.assertTrue(len(carrinho.produtos), 1)
+        self.assertEqual(len(carrinho.produtos), 1)
         self.assertEqual(carrinho.produtos[produto.codigo].quantidade, 1)
         carrinho.adiciona_produto(produto)
-        self.assertTrue(len(carrinho.produtos), 1)
+        self.assertEqual(len(carrinho.produtos), 1)
         self.assertEqual(carrinho.produtos[produto.codigo].quantidade, 2)
 
 
