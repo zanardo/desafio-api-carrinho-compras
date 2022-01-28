@@ -9,3 +9,10 @@ class Cupom:
 
     codigo: str
     valor: float
+
+    def valida_cupom(self) -> bool:
+        """
+        Valida se o cupom de desconto é verdadeiro.
+        Neste exercício, apenas aceitamos qualquer cupom!
+        """
+        return True

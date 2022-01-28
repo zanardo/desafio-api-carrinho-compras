@@ -6,6 +6,7 @@ import unittest
 from datetime import datetime
 
 from api_carrinho.models.carrinho import Carrinho
+from api_carrinho.models.cupom import Cupom
 from api_carrinho.models.produto import Produto
 
 
@@ -33,6 +34,20 @@ class TestModelsProduto(unittest.TestCase):
             produto.define_quantidade(0)
         with self.assertRaises(ValueError):
             produto.define_quantidade(-1)
+
+
+class TestModelsCupom(unittest.TestCase):
+    def _new(self):
+        return Cupom(codigo="NOVO15", valor=15.0)
+
+    def test_new(self):
+        "Teste de criação de um novo cupom de desconto"
+        _ = self._new()
+
+    def test_valida(self):
+        "Teste de validação do cupom"
+        cupom = self._new()
+        self.assertTrue(cupom.valida_cupom())
 
 
 class TestModelsCarrinho(unittest.TestCase):
