@@ -141,6 +141,46 @@ class TestModelsCarrinho(unittest.TestCase):
         carrinho.define_cupom_desconto(cupom)
         self.assertEqual(carrinho.cupom.codigo, "VALE15")
 
+    def test_totais(self):
+        "Testa cálculo de totalizadores do carrinho"
+        carrinho = Carrinho(cliente=None)
+        self.assertEqual(carrinho.totais.subtotal, 0.0)
+        self.assertEqual(carrinho.totais.total, 0.0)
+        carrinho.adiciona_produto(
+            Produto(
+                codigo="CD1234567",
+                descricao="Descrição 2",
+                preco_de=90.0,
+                preco_por=100.0,
+                quantidade=3,
+            )
+        )
+        self.assertEqual(carrinho.totais.subtotal, 300.0)
+        self.assertEqual(carrinho.totais.total, 300.0)
+        carrinho.adiciona_produto(
+            Produto(
+                codigo="FG1234567",
+                descricao="Descrição 3",
+                preco_de=30.0,
+                preco_por=25.5,
+                quantidade=1,
+            )
+        )
+        self.assertEqual(carrinho.totais.subtotal, 325.5)
+        self.assertEqual(carrinho.totais.total, 325.5)
+        carrinho.define_cupom_desconto(Cupom(codigo="AX10", valor=10.0))
+        self.assertEqual(carrinho.totais.subtotal, 325.5)
+        self.assertEqual(carrinho.totais.total, 315.5)
+        carrinho.remove_produto("FG1234567")
+        self.assertEqual(carrinho.totais.subtotal, 300.0)
+        self.assertEqual(carrinho.totais.total, 290.0)
+        carrinho.remove_todos_produtos()
+        self.assertEqual(carrinho.totais.subtotal, 0.0)
+        self.assertEqual(carrinho.totais.total, -10.0)
+        carrinho.define_cupom_desconto(None)
+        self.assertEqual(carrinho.totais.subtotal, 0.0)
+        self.assertEqual(carrinho.totais.total, 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

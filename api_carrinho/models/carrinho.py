@@ -1,9 +1,16 @@
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict, Optional
 from uuid import uuid4
 
 from api_carrinho.models.cupom import Cupom
 from api_carrinho.models.produto import Produto
+
+
+@dataclass
+class CarrinhoTotais:
+    subtotal: float = 0.0
+    total: float = 0.0
 
 
 class Carrinho:
@@ -16,9 +23,21 @@ class Carrinho:
     cliente: Optional[int]  # código do cliente - None caso cliente sem logar
     produtos: Dict[str, Produto]  # produtos no carrinho - código => Produto
     cupom: Optional[Cupom]  # cupom de desconto - aceitamos somente um
+    totais: CarrinhoTotais
 
     def _atualiza_mtime(self):
         self.data_alteracao = datetime.now()
+
+    def _atualiza_totais(self):
+        self.totais.subtotal = 0.0
+        self.totais.total = 0.0
+        for codigo in self.produtos:
+            self.totais.subtotal += (
+                self.produtos[codigo].quantidade * self.produtos[codigo].preco_por
+            )
+        self.totais.total = self.totais.subtotal
+        if self.cupom:
+            self.totais.total -= self.cupom.valor
 
     def __init__(self, cliente: Optional[int]) -> None:
         """
@@ -28,6 +47,8 @@ class Carrinho:
         self.cliente = cliente
         self._atualiza_mtime()
         self.produtos = {}
+        self.cupom = None
+        self.totais = CarrinhoTotais()
 
     def define_cliente(self, cliente: Optional[int]) -> None:
         """
@@ -45,6 +66,7 @@ class Carrinho:
                 self.produtos[produto.codigo].quantidade + 1
             )
         self.produtos[produto.codigo] = produto
+        self._atualiza_totais()
 
     def remove_produto(self, codigo: str) -> None:
         """
@@ -52,12 +74,14 @@ class Carrinho:
         """
         if codigo in self.produtos:
             del self.produtos[codigo]
+            self._atualiza_totais()
 
     def remove_todos_produtos(self):
         """
         Remove todos os produtos do carrinho.
         """
         self.produtos = {}
+        self._atualiza_totais()
 
     def define_cupom_desconto(self, cupom: Optional[Cupom]) -> None:
         """
@@ -65,3 +89,4 @@ class Carrinho:
         Use cupom=None para remover.
         """
         self.cupom = cupom
+        self._atualiza_totais()
