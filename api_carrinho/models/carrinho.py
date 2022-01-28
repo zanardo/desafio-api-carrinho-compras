@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Dict, Optional
 from uuid import uuid4
 
+from api_carrinho.models.cupom import Cupom
 from api_carrinho.models.produto import Produto
 
 
@@ -14,6 +15,7 @@ class Carrinho:
     data_alteracao: datetime  # data e hora de última alteração no carrinho (para expirar)
     cliente: Optional[int]  # código do cliente - None caso cliente sem logar
     produtos: Dict[str, Produto]  # produtos no carrinho - código => Produto
+    cupom: Optional[Cupom]  # cupom de desconto - aceitamos somente um
 
     def _atualiza_mtime(self):
         self.data_alteracao = datetime.now()
@@ -56,3 +58,10 @@ class Carrinho:
         Remove todos os produtos do carrinho.
         """
         self.produtos = {}
+
+    def define_cupom_desconto(self, cupom: Optional[Cupom]) -> None:
+        """
+        Associa um cupom de desconto ao carrinho. No momento, aceitamos somente um cupom.
+        Use cupom=None para remover.
+        """
+        self.cupom = cupom

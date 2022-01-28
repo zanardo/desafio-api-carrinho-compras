@@ -134,6 +134,13 @@ class TestModelsCarrinho(unittest.TestCase):
         carrinho.remove_todos_produtos()
         self.assertEqual(len(carrinho.produtos), 0)
 
+    def test_define_cupom(self):
+        "Testa associação de cupom de desconto ao carrinho"
+        carrinho = Carrinho(cliente=None)
+        cupom = Cupom(codigo="VALE15", valor=15.0)
+        carrinho.define_cupom_desconto(cupom)
+        self.assertEqual(carrinho.cupom.codigo, "VALE15")
+
 
 if __name__ == "__main__":
     unittest.main()
