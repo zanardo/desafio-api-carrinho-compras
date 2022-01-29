@@ -54,6 +54,7 @@ def produto_define_quantidade():
     quantidade = int(request.form["quantidade"])
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.produtos[produto_codigo].define_quantidade(quantidade)
+    carrinho._atualiza_totais()
     return {"sucesso": "ok", "dados": {}}
 
 

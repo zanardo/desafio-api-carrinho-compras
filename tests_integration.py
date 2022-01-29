@@ -41,7 +41,11 @@ def main():
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "CD7654321"})
     log.info("remove produto do carrinho")
     api_post("/produto-remove", dados={"carrinho": carrinho, "produto": "CD7654321"})
-
+    log.info("define a quantidade de um produto")
+    api_post(
+        "/produto-define-quantidade",
+        dados={"carrinho": carrinho, "produto": "AB1234567", "quantidade": 3},
+    )
     log.info("obtendo o carrinho completo da api")
     api_get("/carrinho/{}".format(carrinho))
 
