@@ -6,6 +6,28 @@ de uma loja virtual.
 **Para iniciar**: siga as instruções em "Como empacotar para a produção" e depois "Como
 executar o projeto?".
 
+- [Desafio - API Carrinho de Compras](#desafio---api-carrinho-de-compras)
+  - [Observações sobre a estrutura do projeto](#observações-sobre-a-estrutura-do-projeto)
+  - [Observações sobre a estrutura do código-fonte](#observações-sobre-a-estrutura-do-código-fonte)
+  - [Documentação das APIs](#documentação-das-apis)
+    - [Observações gerais](#observações-gerais)
+    - [Retornos da API](#retornos-da-api)
+    - [Endpoints](#endpoints)
+      - [Novo carrinho](#novo-carrinho)
+      - [Novo produto no carrinho](#novo-produto-no-carrinho)
+      - [Remove produto no carrinho](#remove-produto-no-carrinho)
+      - [Altera quantidade de um produto no carrinho](#altera-quantidade-de-um-produto-no-carrinho)
+      - [Apaga produtos no carrinho](#apaga-produtos-no-carrinho)
+      - [Associa um cupom de desconto ao carrinho](#associa-um-cupom-de-desconto-ao-carrinho)
+      - [Obtém todos os dados do carrinho](#obtém-todos-os-dados-do-carrinho)
+  - [Dependências para o projeto](#dependências-para-o-projeto)
+  - [Como criar um ambiente de desenvolvimento](#como-criar-um-ambiente-de-desenvolvimento)
+  - [Como rodar o projeto em ambiente de desenvolvimento](#como-rodar-o-projeto-em-ambiente-de-desenvolvimento)
+  - [Como rodar a bateria de testes de unidade](#como-rodar-a-bateria-de-testes-de-unidade)
+  - [Como rodar a bateria de testes de integração](#como-rodar-a-bateria-de-testes-de-integração)
+  - [Como empacotar para a "produção"](#como-empacotar-para-a-produção)
+  - [Como executar o projeto usando o Docker](#como-executar-o-projeto-usando-o-docker)
+
 ## Observações sobre a estrutura do projeto
 
 * O código-fonte em Python foi formatado usando o **Black**, com 90 colunas, para
