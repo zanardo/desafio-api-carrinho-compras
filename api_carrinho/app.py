@@ -5,6 +5,7 @@ from flask import Flask, request
 from api_carrinho import __VERSION__
 from api_carrinho.log import log
 from api_carrinho.models.carrinho import Carrinho
+from api_carrinho.models.produto import Produto
 from api_carrinho.persist.carrinhos import db_carrinho_fetch, db_carrinho_save
 from api_carrinho.persist.cupons import db_cupom_fetch
 from api_carrinho.persist.produtos import db_produto_fetch
@@ -25,7 +26,14 @@ def produto_adiciona():
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
-    produto = db_produto_fetch(produto_codigo)
+    produto_persisted = db_produto_fetch(produto_codigo)
+    produto = Produto(
+        codigo=produto_persisted.codigo,
+        descricao=produto_persisted.descricao,
+        preco_de=produto_persisted.preco_de,
+        preco_por=produto_persisted.preco_por,
+        quantidade=1,
+    )
     carrinho.adiciona_produto(produto)
     return {"sucesso": "ok", "dados": {}}
 
