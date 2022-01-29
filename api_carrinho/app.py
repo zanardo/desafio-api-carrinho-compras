@@ -34,8 +34,10 @@ def return_wrapper(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         try:
+            # Chama a função da API e retorna seu dicionário de retorno ...
             return {"sucesso": True, "dados": f(*args, **kwargs)}
         except Exception as ex:
+            # ... ou retorna a exceção caso ocorra.
             log.exception("exceção encontrada: %s", ex)
             return {
                 "sucesso": False,
