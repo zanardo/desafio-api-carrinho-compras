@@ -35,9 +35,9 @@ def api_post(uri: str, dados: Dict) -> Dict:
 def main():
     log.info("criando novo carrinho")
     carrinho = api_post("/novo", dados={})["carrinho_codigo"]
-    log.info("adicionando produto no carrinho")
+    log.info("adiciona produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
-    log.info("adicionando outro produto no carrinho")
+    log.info("adiciona outro produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "CD7654321"})
     log.info("remove produto do carrinho")
     api_post("/produto-remove", dados={"carrinho": carrinho, "produto": "CD7654321"})
@@ -48,7 +48,7 @@ def main():
     )
     log.info("limpa o carrinho")
     api_post("/limpa", dados={"carrinho": carrinho})
-    log.info("adicionando produto no carrinho")
+    log.info("adiciona produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
     log.info("define um cupom de desconto")
     api_post("/cupom-define", dados={"carrinho": carrinho, "cupom": "BLACKFRIDAY15"})
