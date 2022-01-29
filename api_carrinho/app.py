@@ -6,6 +6,7 @@ from api_carrinho import __VERSION__
 from api_carrinho.log import log
 from api_carrinho.models.carrinho import Carrinho
 from api_carrinho.persist.carrinhos import db_carrinho_fetch, db_carrinho_save
+from api_carrinho.persist.produtos import db_produto_fetch
 
 app = Flask(__name__)
 
@@ -16,6 +17,16 @@ def novo():
     carrinho = Carrinho(cliente=cliente)
     db_carrinho_save(carrinho)
     return {"sucesso": "ok", "dados": {"carrinho_codigo": carrinho.codigo}}
+
+
+@app.post("/produto-adiciona")
+def produto_adiciona():
+    carrinho_codigo = request.form["carrinho"]
+    produto_codigo = request.form["produto"]
+    carrinho = db_carrinho_fetch(carrinho_codigo)
+    produto = db_produto_fetch(produto_codigo)
+    carrinho.adiciona_produto(produto)
+    return {"sucesso": "ok", "dados": {}}
 
 
 @app.post("/produto-remove")
