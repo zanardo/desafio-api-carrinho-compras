@@ -51,7 +51,7 @@ def novo() -> Dict:
     """
     Cria um novo cupom de desconto, persistindo. Gera e retorna um código (UUID4).
     """
-    cliente: Optional[str] = request.form.get("cliente")
+    cliente = request.form.get("cliente")
     carrinho = Carrinho(cliente=cliente)
     db_carrinho_save(carrinho)
     return {"carrinho_codigo": carrinho.codigo}
