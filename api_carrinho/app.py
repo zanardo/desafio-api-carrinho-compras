@@ -75,7 +75,7 @@ def cupom_define():
     return {"sucesso": "ok", "dados": {}}
 
 
-@app.get("/carrinho/:codigo")
+@app.get("/carrinho/<codigo>")
 def carrinho(codigo: str):
     carrinho = db_carrinho_fetch(codigo)
     retorno_dados = {
@@ -84,7 +84,7 @@ def carrinho(codigo: str):
         "produtos": [],
         "cupom": {},
     }
-    if carrinho.cupom.codigo:
+    if carrinho.cupom:
         retorno_dados["cupom"] = {
             "codigo": carrinho.cupom.codigo,
             "valor": carrinho.cupom.valor,
@@ -100,8 +100,7 @@ def carrinho(codigo: str):
                 "preco_por": produto.preco_por,
             }
         )
-
-    return retorno_dados
+    return {"sucesso": "ok", "dados": retorno_dados}
 
 
 if __name__ == "__main__":
