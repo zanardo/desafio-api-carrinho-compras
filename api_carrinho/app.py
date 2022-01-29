@@ -1,3 +1,4 @@
+from functools import wraps
 from typing import Optional
 
 from flask import Flask, request
@@ -13,15 +14,45 @@ from api_carrinho.persist.produtos import db_produto_fetch
 app = Flask(__name__)
 
 
+def return_wrapper(f):
+    """
+    Este decorator serve para "embalar" as função da API, preparando o retorno da seguinte
+    forma:
+
+    * As funções da API sempre devem retornar um dicionário com dados compatíveis com JSON
+      (bool, str, int, float).
+    * Caso a função da API não levante uma exceção, este decorator preparará o retorno da
+      seguinte forma:
+      { "sucesso": true, "dados": { ... dados da função da API ... } }
+    * Caso a função da API levante uma exceção, este decorator preparará o retorno da
+      seguinte forma:
+      { "sucesso": false, "erro": { "tipo": "NomeDaExcecao", "descricao": "valor da exceção" } }
+    """
+
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return {"sucesso": True, "dados": f(*args, **kwargs)}
+        except Exception as ex:
+            return {
+                "sucesso": False,
+                "erro": {"tipo": str(ex.__class__.__name__), "descricao": str(ex)},
+            }
+
+    return wrapper
+
+
 @app.post("/novo")
+@return_wrapper
 def novo():
     cliente: Optional[str] = request.form.get("cliente")
     carrinho = Carrinho(cliente=cliente)
     db_carrinho_save(carrinho)
-    return {"sucesso": "ok", "dados": {"carrinho_codigo": carrinho.codigo}}
+    return {"carrinho_codigo": carrinho.codigo}
 
 
 @app.post("/produto-adiciona")
+@return_wrapper
 def produto_adiciona():
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
@@ -35,19 +66,21 @@ def produto_adiciona():
         quantidade=1,
     )
     carrinho.adiciona_produto(produto)
-    return {"sucesso": "ok", "dados": {}}
+    return {}
 
 
 @app.post("/produto-remove")
+@return_wrapper
 def produto_remove():
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.remove_produto(produto_codigo)
-    return {"sucesso": "ok", "dados": {}}
+    return {}
 
 
 @app.post("/produto-define-quantidade")
+@return_wrapper
 def produto_define_quantidade():
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
@@ -55,28 +88,31 @@ def produto_define_quantidade():
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.produtos[produto_codigo].define_quantidade(quantidade)
     carrinho._atualiza_totais()
-    return {"sucesso": "ok", "dados": {}}
+    return {}
 
 
 @app.post("/limpa")
+@return_wrapper
 def limpa():
     carrinho_codigo = request.form["carrinho"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.remove_todos_produtos()
-    return {"sucesso": "ok", "dados": {}}
+    return {}
 
 
 @app.post("/cupom-define")
+@return_wrapper
 def cupom_define():
     carrinho_codigo = request.form["carrinho"]
     cupom_codigo = request.form["cupom"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
     cupom = db_cupom_fetch(cupom_codigo)
     carrinho.define_cupom_desconto(cupom)
-    return {"sucesso": "ok", "dados": {}}
+    return {}
 
 
 @app.get("/carrinho/<codigo>")
+@return_wrapper
 def carrinho(codigo: str):
     carrinho = db_carrinho_fetch(codigo)
     retorno_dados = {
@@ -101,7 +137,7 @@ def carrinho(codigo: str):
                 "preco_por": produto.preco_por,
             }
         )
-    return {"sucesso": "ok", "dados": retorno_dados}
+    return retorno_dados
 
 
 if __name__ == "__main__":
