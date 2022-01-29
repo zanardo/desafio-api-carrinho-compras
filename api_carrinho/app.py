@@ -48,6 +48,14 @@ def produto_define_quantidade():
     return {"sucesso": "ok", "dados": {}}
 
 
+@app.post("/limpa")
+def limpa():
+    carrinho_codigo = request.form["carrinho"]
+    carrinho = db_carrinho_fetch(carrinho_codigo)
+    carrinho.remove_todos_produtos()
+    return {"sucesso": "ok", "dados": {}}
+
+
 if __name__ == "__main__":
     log.info("iniciando api-carrinho versão %s", __VERSION__)
     app.run(host="127.0.0.1", port=5000, debug=True)
