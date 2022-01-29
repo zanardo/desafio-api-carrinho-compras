@@ -1,7 +1,10 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from api_carrinho.models.cupom import Cupom
+
+
+class CupomNaoExisteError(Exception):
+    ...
 
 
 @dataclass
@@ -16,7 +19,8 @@ _CUPOMS = {
 }
 
 
-def db_cupom_fetch(codigo: str) -> Optional[CupomPersisted]:
-    if codigo not in _CUPOMS:
-        return None
-    return _CUPOMS[codigo]
+def db_cupom_fetch(codigo: str) -> CupomPersisted:
+    try:
+        return _CUPOMS[codigo]
+    except KeyError:
+        raise CupomNaoExisteError("cupom com código {} não existe".format(codigo))
