@@ -9,7 +9,7 @@ from api_carrinho.models.carrinho import Carrinho
 from api_carrinho.models.produto import Produto
 from api_carrinho.persist.carrinhos import db_carrinho_fetch, db_carrinho_save
 from api_carrinho.persist.cupons import db_cupom_fetch
-from api_carrinho.persist.produtos import db_produto_fetch
+from api_carrinho.persist.produtos import ProdutoSemEstoqueError, db_produto_fetch
 
 app = Flask(__name__)
 
@@ -103,6 +103,17 @@ def produto_define_quantidade() -> Dict:
     produto_codigo = request.form["produto"]
     quantidade = int(request.form["quantidade"])
     carrinho = db_carrinho_fetch(carrinho_codigo)
+    produto_persisted = db_produto_fetch(produto_codigo)
+    if produto_persisted.estoque < quantidade:
+        raise ProdutoSemEstoqueError(
+            "produto %s sem estoque suficiente (estoque: %d, carrinho: %d)"
+            % (
+                produto_codigo,
+                produto_persisted.estoque,
+                quantidade,
+            )
+        )
+
     carrinho.define_produto_quantidade(produto_codigo, quantidade)
     return {}
 

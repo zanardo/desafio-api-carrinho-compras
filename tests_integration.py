@@ -29,7 +29,11 @@ def api_post(uri: str, dados: Dict) -> Dict:
         raise ValueError(
             "erro ao carregar dados da api: %s: %s", res.status_code, res.text
         )
-    return res.json()["dados"]
+    j = res.json()
+    if j["sucesso"]:
+        return j["dados"]
+    else:
+        return j["erro"]
 
 
 def main():
@@ -55,6 +59,15 @@ def main():
     api_post("/limpa", dados={"carrinho": carrinho})
     log.info("adiciona produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
+    log.info("tenta adicionar produto para estourar estoque")
+    api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "EF3567942"})
+    assert (
+        api_post(
+            "/produto-define-quantidade",
+            dados={"carrinho": carrinho, "produto": "EF3567942", "quantidade": 2},
+        )["tipo"]
+        == "ProdutoSemEstoqueError"
+    )
     log.info("define um cupom de desconto")
     api_post("/cupom-define", dados={"carrinho": carrinho, "cupom": "BLACKFRIDAY15"})
     log.info("obtendo o carrinho completo da api")

@@ -13,6 +13,14 @@ class ProdutoNaoExisteError(Exception):
     ...
 
 
+class ProdutoSemEstoqueError(Exception):
+    """
+    Produto sem estoque o suficiente.
+    """
+
+    ...
+
+
 @dataclass
 class ProdutoPersisted:
     """
