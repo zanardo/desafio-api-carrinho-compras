@@ -48,6 +48,9 @@ def return_wrapper(f):
 @app.post("/novo")
 @return_wrapper
 def novo() -> Dict:
+    """
+    Cria um novo cupom de desconto, persistindo. Gera e retorna um código (UUID4).
+    """
     cliente: Optional[str] = request.form.get("cliente")
     carrinho = Carrinho(cliente=cliente)
     db_carrinho_save(carrinho)
@@ -57,6 +60,9 @@ def novo() -> Dict:
 @app.post("/produto-adiciona")
 @return_wrapper
 def produto_adiciona() -> Dict:
+    """
+    Adiciona um produto em um carrinho de compras.
+    """
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
@@ -75,6 +81,9 @@ def produto_adiciona() -> Dict:
 @app.post("/produto-remove")
 @return_wrapper
 def produto_remove() -> Dict:
+    """
+    Remove um produto de um carrinho de compras.
+    """
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
@@ -85,6 +94,9 @@ def produto_remove() -> Dict:
 @app.post("/produto-define-quantidade")
 @return_wrapper
 def produto_define_quantidade() -> Dict:
+    """
+    Altera a quantidade de um produto em um carrinho de compras.
+    """
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     quantidade = int(request.form["quantidade"])
@@ -97,6 +109,9 @@ def produto_define_quantidade() -> Dict:
 @app.post("/limpa")
 @return_wrapper
 def limpa() -> Dict:
+    """
+    Remove todos os produtos de um carrinho de compras.
+    """
     carrinho_codigo = request.form["carrinho"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.remove_todos_produtos()
@@ -106,6 +121,9 @@ def limpa() -> Dict:
 @app.post("/cupom-define")
 @return_wrapper
 def cupom_define() -> Dict:
+    """
+    Associa um cupom de desconto em um carrinho de compras.
+    """
     carrinho_codigo = request.form["carrinho"]
     cupom_codigo = request.form["cupom"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
@@ -117,6 +135,9 @@ def cupom_define() -> Dict:
 @app.get("/carrinho/<codigo>")
 @return_wrapper
 def carrinho(codigo: str) -> Dict:
+    """
+    Retorna uma representação em JSON de todo o carrinho de compras.
+    """
     carrinho = db_carrinho_fetch(codigo)
     retorno_dados = {
         "codigo": carrinho.codigo,
