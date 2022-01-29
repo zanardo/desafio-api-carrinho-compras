@@ -1,9 +1,26 @@
-from flask import Flask
+from typing import Dict, Optional
+
+from flask import Flask, request
 
 from api_carrinho import __VERSION__
 from api_carrinho.log import log
+from api_carrinho.models.carrinho import Carrinho
 
 app = Flask(__name__)
+
+# Vamos persistir os carrinhos na memória, neste exercício.
+CARRINHOS: Dict[str, Carrinho] = {}
+
+
+@app.post("/novo")
+def novo():
+    cliente: Optional[str] = request.form.get("cliente")
+    carrinho = Carrinho(cliente=cliente)
+    # A probabilidade de uma colisão de UUIDs é baixíssima, mas mesmo assim vamos nos
+    # certificar que o carrinho com o mesmo código não existe.
+    assert carrinho.codigo not in CARRINHOS
+    CARRINHOS[carrinho.codigo] = carrinho
+    return {"sucesso": "ok", "dados": {"carrinho_codigo": carrinho.codigo}}
 
 
 if __name__ == "__main__":
