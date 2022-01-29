@@ -16,8 +16,8 @@ app = Flask(__name__)
 
 def return_wrapper(f):
     """
-    Este decorator serve para "embalar" as função da API, preparando o retorno da seguinte
-    forma:
+    Este decorator serve para "embalar" as funções da API, preparando o retorno da
+    seguinte forma:
 
     * As funções da API sempre devem retornar um dicionário com dados compatíveis com JSON
       (bool, str, int, float).
