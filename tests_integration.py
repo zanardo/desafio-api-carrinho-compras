@@ -50,6 +50,8 @@ def main():
     api_post("/limpa", dados={"carrinho": carrinho})
     log.info("adicionando produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
+    log.info("define um cupom de desconto")
+    api_post("/cupom-define", dados={"carrinho": carrinho, "cupom": "BLACKFRIDAY15"})
     log.info("obtendo o carrinho completo da api")
     api_get("/carrinho/{}".format(carrinho))
 
