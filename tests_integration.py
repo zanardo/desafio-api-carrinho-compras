@@ -39,6 +39,11 @@ def main():
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
     log.info("adiciona outro produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "CD7654321"})
+    log.info("define quantidade de produto no carrinho")
+    api_post(
+        "/produto-define-quantidade",
+        dados={"carrinho": carrinho, "produto": "CD7654321", "quantidade": 2},
+    )
     log.info("remove produto do carrinho")
     api_post("/produto-remove", dados={"carrinho": carrinho, "produto": "CD7654321"})
     log.info("define a quantidade de um produto")
