@@ -67,6 +67,35 @@ def cupom_define():
     return {"sucesso": "ok", "dados": {}}
 
 
+@app.get("/carrinho/:codigo")
+def carrinho(codigo: str):
+    carrinho = db_carrinho_fetch(codigo)
+    retorno_dados = {
+        "codigo": carrinho.codigo,
+        "totais": {"subtotal": carrinho.totais.subtotal, "total": carrinho.totais.total},
+        "produtos": [],
+        "cupom": {},
+    }
+    if carrinho.cupom.codigo:
+        retorno_dados["cupom"] = {
+            "codigo": carrinho.cupom.codigo,
+            "valor": carrinho.cupom.valor,
+        }
+    for codigo_produto in carrinho.produtos:
+        produto = carrinho.produtos[codigo_produto]
+        retorno_dados["produtos"].append(
+            {
+                "codigo": produto.codigo,
+                "descricao": produto.descricao,
+                "quantidade": produto.quantidade,
+                "preco_de": produto.preco_de,
+                "preco_por": produto.preco_por,
+            }
+        )
+
+    return retorno_dados
+
+
 if __name__ == "__main__":
     log.info("iniciando api-carrinho versão %s", __VERSION__)
     app.run(host="127.0.0.1", port=5000, debug=True)
