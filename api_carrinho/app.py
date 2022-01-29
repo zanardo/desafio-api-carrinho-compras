@@ -36,6 +36,7 @@ def return_wrapper(f):
         try:
             return {"sucesso": True, "dados": f(*args, **kwargs)}
         except Exception as ex:
+            log.exception("exceção encontrada: %s", ex)
             return {
                 "sucesso": False,
                 "erro": {"tipo": str(ex.__class__.__name__), "descricao": str(ex)},

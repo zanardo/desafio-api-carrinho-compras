@@ -6,8 +6,15 @@ from api_carrinho.models.carrinho import Carrinho
 _CARRINHOS: Dict[str, Carrinho] = {}
 
 
-def db_carrinho_fetch(codigo: str) -> Optional[Carrinho]:
-    return _CARRINHOS.get(codigo)
+class CarrinhoNaoExisteError(Exception):
+    ...
+
+
+def db_carrinho_fetch(codigo: str) -> Carrinho:
+    try:
+        return _CARRINHOS[codigo]
+    except KeyError:
+        raise CarrinhoNaoExisteError("carrinho com código {} não existe".format(codigo))
 
 
 def db_carrinho_save(carrinho: Carrinho) -> None:
