@@ -90,3 +90,10 @@ class Carrinho:
         """
         self.cupom = cupom
         self._atualiza_totais()
+
+    def define_produto_quantidade(self, produto_codigo: str, quantidade: int) -> None:
+        """
+        Define a quantidade de um produto no carrinho.
+        """
+        self.produtos[produto_codigo].define_quantidade(quantidade)
+        self._atualiza_totais()

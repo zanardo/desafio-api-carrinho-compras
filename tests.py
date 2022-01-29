@@ -134,6 +134,22 @@ class TestModelsCarrinho(unittest.TestCase):
         carrinho.remove_todos_produtos()
         self.assertEqual(len(carrinho.produtos), 0)
 
+    def test_produto_define_quantidade(self):
+        "Testa definição da quantidade de um produto no carrinho"
+        carrinho = Carrinho(cliente=None)
+        carrinho.adiciona_produto(
+            Produto(
+                codigo="AB1234567",
+                descricao="Descrição",
+                preco_de=100.0,
+                preco_por=90.0,
+                quantidade=1,
+            )
+        )
+        self.assertEqual(carrinho.produtos["AB1234567"].quantidade, 1)
+        carrinho.define_produto_quantidade("AB1234567", 2)
+        self.assertEqual(carrinho.produtos["AB1234567"].quantidade, 2)
+
     def test_define_cupom(self):
         "Testa associação de cupom de desconto ao carrinho"
         carrinho = Carrinho(cliente=None)

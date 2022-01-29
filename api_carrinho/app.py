@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Dict, Optional
+from typing import Dict
 
 from flask import Flask, request
 
@@ -103,8 +103,7 @@ def produto_define_quantidade() -> Dict:
     produto_codigo = request.form["produto"]
     quantidade = int(request.form["quantidade"])
     carrinho = db_carrinho_fetch(carrinho_codigo)
-    carrinho.produtos[produto_codigo].define_quantidade(quantidade)
-    carrinho._atualiza_totais()
+    carrinho.define_produto_quantidade(produto_codigo, quantidade)
     return {}
 
 
