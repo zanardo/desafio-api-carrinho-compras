@@ -25,6 +25,10 @@ def main():
     carrinho = api_post("/novo", dados={})["carrinho_codigo"]
     log.info("adicionando produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
+    log.info("adicionando outro produto no carrinho")
+    api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "CD7654321"})
+    log.info("remove produto do carrinho")
+    api_post("/produto-remove", dados={"carrinho": carrinho, "produto": "CD7654321"})
 
 
 if __name__ == "__main__":
