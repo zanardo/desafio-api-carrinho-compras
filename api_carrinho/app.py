@@ -26,7 +26,9 @@ def return_wrapper(f):
       { "sucesso": true, "dados": { ... dados da função da API ... } }
     * Caso a função da API levante uma exceção, este decorator preparará o retorno da
       seguinte forma:
-      { "sucesso": false, "erro": { "tipo": "NomeDaExcecao", "descricao": "valor da exceção" } }
+      { "sucesso": false, "erro": {
+            "tipo": "NomeDaExcecao", "descricao": "valor da exceção"
+        }}
     """
 
     @wraps(f)
