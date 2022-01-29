@@ -22,4 +22,7 @@ def db_carrinho_save(carrinho: Carrinho) -> None:
 
 
 def db_carrinho_delete(codigo: str) -> None:
-    del _CARRINHOS[codigo]
+    try:
+        del _CARRINHOS[codigo]
+    except KeyError:
+        raise CarrinhoNaoExisteError("carrinho com código {} não existe".format(codigo))
