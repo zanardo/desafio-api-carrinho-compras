@@ -6,6 +6,7 @@ from api_carrinho import __VERSION__
 from api_carrinho.log import log
 from api_carrinho.models.carrinho import Carrinho
 from api_carrinho.persist.carrinhos import db_carrinho_fetch, db_carrinho_save
+from api_carrinho.persist.cupons import db_cupom_fetch
 from api_carrinho.persist.produtos import db_produto_fetch
 
 app = Flask(__name__)
@@ -53,6 +54,16 @@ def limpa():
     carrinho_codigo = request.form["carrinho"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.remove_todos_produtos()
+    return {"sucesso": "ok", "dados": {}}
+
+
+@app.post("/cupom-define")
+def cupom_define():
+    carrinho_codigo = request.form["carrinho"]
+    cupom_codigo = request.form["cupom"]
+    carrinho = db_carrinho_fetch(carrinho_codigo)
+    cupom = db_cupom_fetch(cupom_codigo)
+    carrinho.define_cupom_desconto(cupom)
     return {"sucesso": "ok", "dados": {}}
 
 
