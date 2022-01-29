@@ -73,7 +73,7 @@ executar o projeto?".
 
 * Existem dois formatos de retorno, dependendo se a API levanta uma exceção ou não:
 
-** Sucesso:
+    * Sucesso:
 
 ```json
 {
@@ -84,7 +84,7 @@ executar o projeto?".
 }
 ```
 
-** Problema:
+    * Problema:
 
 ```json
 {
@@ -122,8 +122,8 @@ executar o projeto?".
 * Uri: `/produto-adiciona`
 * Método: `POST`
 * Parâmetros (POST):
-** `carrinho`: código do carrinho
-** `produto`: código do produto
+    * `carrinho`: código do carrinho
+    * `produto`: código do produto
 * Ações: adiciona o produto ao carrinho, com quantidade `1`.
 * Exemplo de retorno:
 
@@ -139,8 +139,8 @@ executar o projeto?".
 * Uri: `/produto-remove`
 * Método: `POST`
 * Parâmetros (POST):
-** `carrinho`: código do carrinho
-** `produto`: código do produto
+    * `carrinho`: código do carrinho
+    * `produto`: código do produto
 * Ações: remove o produto ao carrinho, mesmo que existam mais de 1 unidade.
 * Exemplo de retorno:
 
@@ -156,9 +156,9 @@ executar o projeto?".
 * Uri: `/produto-define-quantidade`
 * Método: `POST`
 * Parâmetros (POST):
-** `carrinho`: código do carrinho
-** `produto`: código do produto
-** `quantidade`: nova quantidade do produto
+    * `carrinho`: código do carrinho
+    * `produto`: código do produto
+    * `quantidade`: nova quantidade do produto
 * Ações: altera a quantidade do produto no carrinho.
 * Exemplo de retorno:
 
@@ -192,8 +192,8 @@ executar o projeto?".
 * Uri: `/cupom-define`
 * Método: `POST`
 * Parâmetros (POST):
-** `carrinho`: código do carrinho
-** `cupom`: código do cupom
+    * `carrinho`: código do carrinho
+    * `cupom`: código do cupom
 * Ações: associa um cupom de desconto ao carrinho, calculando o desconto no total.
 * Exemplo de retorno:
 
@@ -209,7 +209,7 @@ executar o projeto?".
 * Uri: `/carrinho/<codigo>`
 * Método: `GET`
 * Parâmetros (URL path):
-** `codigo`: código do carrinho
+    * `codigo`: código do carrinho
 * Ações: retorna todos os dados do carrinho.
 * Exemplo de retorno:
 
