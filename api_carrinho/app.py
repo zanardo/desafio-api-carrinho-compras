@@ -1,5 +1,5 @@
 from functools import wraps
-from typing import Optional
+from typing import Dict, Optional
 
 from flask import Flask, request
 
@@ -46,7 +46,7 @@ def return_wrapper(f):
 
 @app.post("/novo")
 @return_wrapper
-def novo():
+def novo() -> Dict:
     cliente: Optional[str] = request.form.get("cliente")
     carrinho = Carrinho(cliente=cliente)
     db_carrinho_save(carrinho)
@@ -55,7 +55,7 @@ def novo():
 
 @app.post("/produto-adiciona")
 @return_wrapper
-def produto_adiciona():
+def produto_adiciona() -> Dict:
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
@@ -73,7 +73,7 @@ def produto_adiciona():
 
 @app.post("/produto-remove")
 @return_wrapper
-def produto_remove():
+def produto_remove() -> Dict:
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
@@ -83,7 +83,7 @@ def produto_remove():
 
 @app.post("/produto-define-quantidade")
 @return_wrapper
-def produto_define_quantidade():
+def produto_define_quantidade() -> Dict:
     carrinho_codigo = request.form["carrinho"]
     produto_codigo = request.form["produto"]
     quantidade = int(request.form["quantidade"])
@@ -95,7 +95,7 @@ def produto_define_quantidade():
 
 @app.post("/limpa")
 @return_wrapper
-def limpa():
+def limpa() -> Dict:
     carrinho_codigo = request.form["carrinho"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
     carrinho.remove_todos_produtos()
@@ -104,7 +104,7 @@ def limpa():
 
 @app.post("/cupom-define")
 @return_wrapper
-def cupom_define():
+def cupom_define() -> Dict:
     carrinho_codigo = request.form["carrinho"]
     cupom_codigo = request.form["cupom"]
     carrinho = db_carrinho_fetch(carrinho_codigo)
@@ -115,7 +115,7 @@ def cupom_define():
 
 @app.get("/carrinho/<codigo>")
 @return_wrapper
-def carrinho(codigo: str):
+def carrinho(codigo: str) -> Dict:
     carrinho = db_carrinho_fetch(codigo)
     retorno_dados = {
         "codigo": carrinho.codigo,
