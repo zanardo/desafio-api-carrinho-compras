@@ -23,6 +23,15 @@ def novo():
     return {"sucesso": "ok", "dados": {"carrinho_codigo": carrinho.codigo}}
 
 
+@app.post("/produto-remove")
+def produto_remove():
+    carrinho_codigo = request.form["carrinho"]
+    produto_codigo = request.form["produto"]
+    carrinho = CARRINHOS[carrinho_codigo]
+    carrinho.remove_produto(produto_codigo)
+    return {"sucesso": "ok", "dados": {}}
+
+
 if __name__ == "__main__":
     log.info("iniciando api-carrinho versão %s", __VERSION__)
     app.run(host="127.0.0.1", port=5000, debug=True)
