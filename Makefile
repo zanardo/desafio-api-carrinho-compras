@@ -50,10 +50,15 @@ clean:
 run: $(VENV)/.ok
 	@while :; do $(VPYTHON) -m api_carrinho.app ; sleep 1 ; done
 
-# Executa a bateria de testes.
+# Executa a bateria de testes de unidade.
 .PHONY: tests
 tests: $(VENV)/.ok
 	$(VPYTHON) -m tests
+
+# Executa a bateria de testes de integração.
+.PHONY: tests-integration
+tests-integration: $(VENV)/.ok
+	$(VPYTHON) -m tests_integration
 
 # Cria a imagem do Docker.
 .PHONY: docker-build
