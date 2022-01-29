@@ -1,5 +1,8 @@
 from dataclasses import dataclass
-from typing import Optional
+
+
+class ProdutoNaoExisteError(Exception):
+    ...
 
 
 @dataclass
@@ -36,7 +39,8 @@ _PRODUTOS = {
 }
 
 
-def db_produto_fetch(codigo: str) -> Optional[ProdutoPersisted]:
-    if codigo not in _PRODUTOS:
-        return None
-    return _PRODUTOS[codigo]
+def db_produto_fetch(codigo: str) -> ProdutoPersisted:
+    try:
+        return _PRODUTOS[codigo]
+    except KeyError:
+        raise ProdutoNaoExisteError("produto com código {} não existe".format(codigo))

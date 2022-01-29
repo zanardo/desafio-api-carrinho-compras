@@ -1,5 +1,5 @@
 # Vamos persistir os carrinhos na memória, neste exercício.
-from typing import Dict, Optional
+from typing import Dict
 
 from api_carrinho.models.carrinho import Carrinho
 
