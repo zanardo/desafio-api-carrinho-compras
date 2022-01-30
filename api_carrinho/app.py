@@ -60,6 +60,19 @@ def novo() -> Dict:
     return {"carrinho_codigo": carrinho.codigo}
 
 
+@app.post("/define-cliente")
+@return_wrapper
+def define_cliente() -> Dict:
+    """
+    Altera o cliente associado ao carrinho.
+    """
+    cliente = int(request.form["cliente"])
+    carrinho_codigo = request.form["carrinho"]
+    carrinho = db_carrinho_fetch(carrinho_codigo)
+    carrinho.define_cliente(cliente)
+    return {}
+
+
 @app.post("/produto-adiciona")
 @return_wrapper
 def produto_adiciona() -> Dict:
@@ -154,6 +167,7 @@ def carrinho(codigo: str) -> Dict:
     carrinho = db_carrinho_fetch(codigo)
     retorno_dados = {
         "codigo": carrinho.codigo,
+        "cliente": carrinho.cliente,
         "totais": {"subtotal": carrinho.totais.subtotal, "total": carrinho.totais.total},
         "produtos": [],
         "cupom": {},

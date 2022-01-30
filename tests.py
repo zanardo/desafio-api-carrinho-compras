@@ -63,6 +63,15 @@ class TestModelsCarrinho(unittest.TestCase):
         )
         self.assertEqual((datetime.now() - carrinho.data_alteracao).days, 0)
 
+    def test_cliente(self):
+        "Teste de alteração de cliente"
+        carrinho = Carrinho(cliente=None)
+        self.assertIsNone(carrinho.cliente)
+        carrinho.define_cliente(123456)
+        self.assertEqual(carrinho.cliente, 123456)
+        carrinho.define_cliente(None)
+        self.assertIsNone(carrinho.cliente)
+
     def test_adiciona_produto(self):
         "Teste de adição de produto ao carrinho"
         carrinho = Carrinho(cliente=None)

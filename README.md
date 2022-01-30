@@ -14,6 +14,7 @@ executar o projeto usando o Docker".
     - [Retornos da API](#retornos-da-api)
     - [Endpoints](#endpoints)
       - [Novo carrinho](#novo-carrinho)
+      - [Altera cliente](#altera-cliente)
       - [Novo produto no carrinho](#novo-produto-no-carrinho)
       - [Remove produto no carrinho](#remove-produto-no-carrinho)
       - [Altera quantidade de um produto no carrinho](#altera-quantidade-de-um-produto-no-carrinho)
@@ -140,6 +141,23 @@ executar o projeto usando o Docker".
     "dados": {
         "carrinho_codigo": "2a707934-33a3-4e2e-9dd6-23c037be2522"
     },
+    "sucesso": true
+}
+```
+
+#### Altera cliente
+
+* Uri: `/define-cliente`
+* Método: `POST`
+* Parâmetros (POST):
+    * `carrinho`: código do carrinho
+    * `cliente`: código do cliente
+* Ações: altera o cliente associado ao carrinho de compras.
+* Exemplo de retorno:
+
+```json
+{
+    "dados": {},
     "sucesso": true
 }
 ```
