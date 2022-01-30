@@ -1,4 +1,5 @@
 from functools import wraps
+from os import environ
 from typing import Dict
 
 from flask import Flask, request
@@ -177,5 +178,7 @@ def carrinho(codigo: str) -> Dict:
 
 
 if __name__ == "__main__":
+    host = environ.get("HOST", "127.0.0.1")
+    port = environ.get("PORT", 5000)
     log.info("iniciando api-carrinho versão %s", __VERSION__)
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host=host, port=port, debug=True)
