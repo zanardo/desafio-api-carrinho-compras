@@ -4,11 +4,11 @@ Este repositório possui um desafio de implementação de uma API para um carrin
 de uma loja virtual.
 
 **Para iniciar**: siga as instruções em "Como empacotar para a produção" e depois "Como
-executar o projeto?".
+executar o projeto usando o Docker".
 
 - [Desafio - API Carrinho de Compras](#desafio---api-carrinho-de-compras)
-  - [Observações sobre a estrutura do projeto](#observações-sobre-a-estrutura-do-projeto)
   - [Observações sobre a estrutura do código-fonte](#observações-sobre-a-estrutura-do-código-fonte)
+  - [Observações sobre a estrutura do projeto](#observações-sobre-a-estrutura-do-projeto)
   - [Documentação das APIs](#documentação-das-apis)
     - [Observações gerais](#observações-gerais)
     - [Retornos da API](#retornos-da-api)
@@ -28,7 +28,8 @@ executar o projeto?".
   - [Como empacotar para a "produção"](#como-empacotar-para-a-produção)
   - [Como executar o projeto usando o Docker](#como-executar-o-projeto-usando-o-docker)
 
-## Observações sobre a estrutura do projeto
+
+## Observações sobre a estrutura do código-fonte
 
 * O código-fonte em Python foi formatado usando o **Black**, com 90 colunas, para
   padronização.
@@ -52,7 +53,7 @@ executar o projeto?".
   **pip-tools** para compilar a relação das dependências diretas e transitivas com versões
   fixas, para ser reproduzível. Seu gerenciamento está automatizado no `Makefile`.
 
-## Observações sobre a estrutura do código-fonte
+## Observações sobre a estrutura do projeto
 
 * Todos os dados de persistência são usados através de _mocks_, ficando no pacote
   `api_carrinho.persist`.
@@ -68,14 +69,18 @@ executar o projeto?".
 
 * O diretório `persist` contém módulos que "persistem" os dados na memória e contém
   pré-definidos alguns dados para uso neste exercício, eliminando a necessidade de bancos
-  de dados separados:
+  de dados separado:
 
     * `carrinhos`: Classe `CarrinhoPersist` e funções de salvar/coletar os carrinhos.
     * `cupons`: Classe `CupomPersist` e funções para coletar cupons de desconto.
     * `produtos`: Classe `ProdutoPersist` e funções para coletar produtos no cadastro.
 
-* O aplicativo em si, que provê as APIs via HTTP fica em `api_carrinho.app`. Nela, são
+* O aplicativo em si, que provê a API via HTTP fica em `api_carrinho.app`. Nele, são
   plugados os registros de _mocks_ dos dados com as regras de negócio.
+
+* O servidor web usado é o de desenvolvimento do _Flask_ com _debug_ ativado. Isto foi
+  feito somente para este exercício. Em produção, deve-se usar um servidor apropriado (ex:
+  _Gunicorn_, _UWSGI_, etc)!
 
 ## Documentação das APIs
 
@@ -118,7 +123,7 @@ executar o projeto?".
 }
 ```
 
-* Nos dois casos, são retornados o status HTTP 200.
+* Nos dois casos, é retornado o status HTTP 200.
 
 ### Endpoints
 
@@ -146,7 +151,8 @@ executar o projeto?".
 * Parâmetros (POST):
     * `carrinho`: código do carrinho
     * `produto`: código do produto
-* Ações: adiciona o produto ao carrinho, com quantidade `1`.
+* Ações: adiciona o produto ao carrinho, com quantidade `1`. Os dados do produto são
+  coletados da persistência.
 * Exemplo de retorno:
 
 ```json
@@ -163,7 +169,7 @@ executar o projeto?".
 * Parâmetros (POST):
     * `carrinho`: código do carrinho
     * `produto`: código do produto
-* Ações: remove o produto ao carrinho, mesmo que existam mais de 1 unidade.
+* Ações: remove completamente o produto do carrinho.
 * Exemplo de retorno:
 
 ```json
@@ -216,7 +222,8 @@ executar o projeto?".
 * Parâmetros (POST):
     * `carrinho`: código do carrinho
     * `cupom`: código do cupom
-* Ações: associa um cupom de desconto ao carrinho, calculando o desconto no total.
+* Ações: associa um cupom de desconto ao carrinho, calculando o desconto no total. Os
+  dados do cupom são coletados da persistência.
 * Exemplo de retorno:
 
 ```json
