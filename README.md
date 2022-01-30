@@ -263,6 +263,7 @@ executar o projeto usando o Docker".
 ```json
 {
   "dados": {
+    "cliente": 123456,
     "codigo": "5d05fe31-8363-426e-9de0-481dbca59e84",
     "cupom": {
       "codigo": "BLACKFRIDAY15",
