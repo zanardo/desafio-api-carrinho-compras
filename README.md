@@ -13,14 +13,14 @@ executar o projeto usando o Docker".
     - [Observações gerais](#observações-gerais)
     - [Retornos da API](#retornos-da-api)
     - [Endpoints](#endpoints)
-      - [Novo carrinho](#novo-carrinho)
-      - [Altera cliente](#altera-cliente)
-      - [Novo produto no carrinho](#novo-produto-no-carrinho)
-      - [Remove produto no carrinho](#remove-produto-no-carrinho)
-      - [Altera quantidade de um produto no carrinho](#altera-quantidade-de-um-produto-no-carrinho)
-      - [Apaga produtos no carrinho](#apaga-produtos-no-carrinho)
-      - [Associa um cupom de desconto ao carrinho](#associa-um-cupom-de-desconto-ao-carrinho)
-      - [Obtém todos os dados do carrinho](#obtém-todos-os-dados-do-carrinho)
+      - [/novo - Novo carrinho](#novo---novo-carrinho)
+      - [/define-cliente - Altera cliente](#define-cliente---altera-cliente)
+      - [/produto-adiciona - Novo produto no carrinho](#produto-adiciona---novo-produto-no-carrinho)
+      - [/produto-remove - Remove produto no carrinho](#produto-remove---remove-produto-no-carrinho)
+      - [/produto-define-quantidade - Altera quantidade de um produto no carrinho](#produto-define-quantidade---altera-quantidade-de-um-produto-no-carrinho)
+      - [/limpa - Apaga produtos no carrinho](#limpa---apaga-produtos-no-carrinho)
+      - [/cupom-define - Associa um cupom de desconto ao carrinho](#cupom-define---associa-um-cupom-de-desconto-ao-carrinho)
+      - [/carrinho/<codigo> - Obtém todos os dados do carrinho](#carrinhocodigo---obtém-todos-os-dados-do-carrinho)
   - [Dependências para o projeto](#dependências-para-o-projeto)
   - [Como criar um ambiente de desenvolvimento](#como-criar-um-ambiente-de-desenvolvimento)
   - [Como rodar o projeto em ambiente de desenvolvimento](#como-rodar-o-projeto-em-ambiente-de-desenvolvimento)
@@ -47,20 +47,22 @@ executar o projeto usando o Docker".
 * O projeto possui diversos testes de unidade para facilitar na manutenção e
   _refactorings_.
 
-* O projeto possui testes de integração, os quais devem ser rodados com o servidor web
+* O projeto possui testes de integração, os quais devem ser executados com o servidor web
   previamente rodando.
 
 * O projeto usa um _virtualenv_ para salvar as dependências de forma isolada, e o
   **pip-tools** para compilar a relação das dependências diretas e transitivas com versões
   fixas, para ser reproduzível. Seu gerenciamento está automatizado no `Makefile`.
 
-## Observações sobre a estrutura do projeto
+* O empacotamento do projeto para "produção" usa o Docker.
 
-* Todos os dados de persistência são usados através de _mocks_, ficando no pacote
-  `api_carrinho.persist`.
+## Observações sobre a estrutura do projeto
 
 * Todas as rotinas relacionadas à manipulação dos dados e regras de negócio ficam no
   pacote `api_carrinho.models`.
+
+* Todos os dados de persistência são usados através de _mocks_, ficando no pacote
+  `api_carrinho.persist`.
 
 * O diretório `models` contém os seguintes módulos:
 
@@ -128,7 +130,7 @@ executar o projeto usando o Docker".
 
 ### Endpoints
 
-#### Novo carrinho
+#### /novo - Novo carrinho
 
 * Uri: `/novo`
 * Método: `POST`
@@ -145,7 +147,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### Altera cliente
+#### /define-cliente - Altera cliente
 
 * Uri: `/define-cliente`
 * Método: `POST`
@@ -162,7 +164,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### Novo produto no carrinho
+#### /produto-adiciona - Novo produto no carrinho
 
 * Uri: `/produto-adiciona`
 * Método: `POST`
@@ -180,7 +182,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### Remove produto no carrinho
+#### /produto-remove - Remove produto no carrinho
 
 * Uri: `/produto-remove`
 * Método: `POST`
@@ -197,7 +199,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### Altera quantidade de um produto no carrinho
+#### /produto-define-quantidade - Altera quantidade de um produto no carrinho
 
 * Uri: `/produto-define-quantidade`
 * Método: `POST`
@@ -218,7 +220,7 @@ executar o projeto usando o Docker".
     * Pode retornar a exceção `ProdutoSemEstoqueError` quando não existe estoque
       suficiente do produto para a quantidade no carrinho.
 
-#### Apaga produtos no carrinho
+#### /limpa - Apaga produtos no carrinho
 
 * Uri: `/limpa`
 * Método: `POST`
@@ -233,7 +235,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### Associa um cupom de desconto ao carrinho
+#### /cupom-define - Associa um cupom de desconto ao carrinho
 
 * Uri: `/cupom-define`
 * Método: `POST`
@@ -251,7 +253,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### Obtém todos os dados do carrinho
+#### /carrinho/<codigo> - Obtém todos os dados do carrinho
 
 * Uri: `/carrinho/<codigo>`
 * Método: `GET`
@@ -272,7 +274,7 @@ executar o projeto usando o Docker".
     "produtos": [
       {
         "codigo": "AB1234567",
-        "descricao": "Camiseta P\u00f3lo",
+        "descricao": "Camiseta Pólo",
         "preco_de": 170.0,
         "preco_por": 170.0,
         "quantidade": 1
