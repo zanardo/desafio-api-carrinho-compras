@@ -40,7 +40,7 @@ def main():
     log.info("criando novo carrinho")
     carrinho = api_post("/novo", dados={})["carrinho_codigo"]
     log.info("altera cliente do carrinho")
-    api_post("/define-cliente", dados={"carrinho": carrinho, "cliente": 123456})
+    api_post("/cliente-define", dados={"carrinho": carrinho, "cliente": 123456})
     log.info("adiciona produto no carrinho")
     api_post("/produto-adiciona", dados={"carrinho": carrinho, "produto": "AB1234567"})
     log.info("adiciona outro produto no carrinho")

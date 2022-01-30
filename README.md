@@ -14,7 +14,7 @@ executar o projeto usando o Docker".
     - [Retornos da API](#retornos-da-api)
     - [Endpoints](#endpoints)
       - [/novo - Novo carrinho](#novo---novo-carrinho)
-      - [/define-cliente - Altera cliente](#define-cliente---altera-cliente)
+      - [/cliente-define - Altera cliente](#cliente-define---altera-cliente)
       - [/produto-adiciona - Novo produto no carrinho](#produto-adiciona---novo-produto-no-carrinho)
       - [/produto-remove - Remove produto no carrinho](#produto-remove---remove-produto-no-carrinho)
       - [/produto-define-quantidade - Altera quantidade de um produto no carrinho](#produto-define-quantidade---altera-quantidade-de-um-produto-no-carrinho)
@@ -147,9 +147,9 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### /define-cliente - Altera cliente
+#### /cliente-define - Altera cliente
 
-* Uri: `/define-cliente`
+* Uri: `/cliente-define`
 * Método: `POST`
 * Parâmetros (POST):
     * `carrinho`: código do carrinho (texto)

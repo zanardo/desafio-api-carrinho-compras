@@ -60,7 +60,7 @@ def novo() -> Dict:
     return {"carrinho_codigo": carrinho.codigo}
 
 
-@app.post("/define-cliente")
+@app.post("/cliente-define")
 @return_wrapper
 def define_cliente() -> Dict:
     """
