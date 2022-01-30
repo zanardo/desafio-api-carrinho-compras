@@ -150,8 +150,8 @@ executar o projeto usando o Docker".
 * Uri: `/define-cliente`
 * Método: `POST`
 * Parâmetros (POST):
-    * `carrinho`: código do carrinho
-    * `cliente`: código do cliente
+    * `carrinho`: código do carrinho (texto)
+    * `cliente`: código do cliente (inteiro)
 * Ações: altera o cliente associado ao carrinho de compras.
 * Exemplo de retorno:
 
@@ -167,8 +167,8 @@ executar o projeto usando o Docker".
 * Uri: `/produto-adiciona`
 * Método: `POST`
 * Parâmetros (POST):
-    * `carrinho`: código do carrinho
-    * `produto`: código do produto
+    * `carrinho`: código do carrinho (texto)
+    * `produto`: código do produto (texto)
 * Ações: adiciona o produto ao carrinho, com quantidade `1`. Os dados do produto são
   coletados da persistência.
 * Exemplo de retorno:
@@ -185,8 +185,8 @@ executar o projeto usando o Docker".
 * Uri: `/produto-remove`
 * Método: `POST`
 * Parâmetros (POST):
-    * `carrinho`: código do carrinho
-    * `produto`: código do produto
+    * `carrinho`: código do carrinho (texto)
+    * `produto`: código do produto (texto)
 * Ações: remove completamente o produto do carrinho.
 * Exemplo de retorno:
 
@@ -202,9 +202,9 @@ executar o projeto usando o Docker".
 * Uri: `/produto-define-quantidade`
 * Método: `POST`
 * Parâmetros (POST):
-    * `carrinho`: código do carrinho
-    * `produto`: código do produto
-    * `quantidade`: nova quantidade do produto
+    * `carrinho`: código do carrinho (texto)
+    * `produto`: código do produto (texto)
+    * `quantidade`: nova quantidade do produto (inteiro)
 * Ações: altera a quantidade do produto no carrinho.
 * Exemplo de retorno:
 
@@ -238,8 +238,8 @@ executar o projeto usando o Docker".
 * Uri: `/cupom-define`
 * Método: `POST`
 * Parâmetros (POST):
-    * `carrinho`: código do carrinho
-    * `cupom`: código do cupom
+    * `carrinho`: código do carrinho (texto)
+    * `cupom`: código do cupom (texto)
 * Ações: associa um cupom de desconto ao carrinho, calculando o desconto no total. Os
   dados do cupom são coletados da persistência.
 * Exemplo de retorno:
@@ -256,7 +256,7 @@ executar o projeto usando o Docker".
 * Uri: `/carrinho/<codigo>`
 * Método: `GET`
 * Parâmetros (URL path):
-    * `codigo`: código do carrinho
+    * `codigo`: código do carrinho (texto)
 * Ações: retorna todos os dados do carrinho.
 * Exemplo de retorno:
 
