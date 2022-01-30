@@ -100,7 +100,7 @@ executar o projeto usando o Docker".
 
 * Existem dois formatos de retorno, dependendo se a API levanta uma exceção ou não:
 
-    * Sucesso:
+  * Sucesso:
 
 ```json
 {
@@ -111,7 +111,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-    * Problema:
+  * Problema:
 
 ```json
 {
