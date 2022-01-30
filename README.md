@@ -20,7 +20,7 @@ executar o projeto usando o Docker".
       - [/produto-define-quantidade - Altera quantidade de um produto no carrinho](#produto-define-quantidade---altera-quantidade-de-um-produto-no-carrinho)
       - [/limpa - Apaga produtos no carrinho](#limpa---apaga-produtos-no-carrinho)
       - [/cupom-define - Associa um cupom de desconto ao carrinho](#cupom-define---associa-um-cupom-de-desconto-ao-carrinho)
-      - [/carrinho/<codigo> - Obtém todos os dados do carrinho](#carrinhocodigo---obtém-todos-os-dados-do-carrinho)
+      - [/carrinho - Obtém todos os dados do carrinho](#carrinho---obtém-todos-os-dados-do-carrinho)
   - [Dependências para o projeto](#dependências-para-o-projeto)
   - [Como criar um ambiente de desenvolvimento](#como-criar-um-ambiente-de-desenvolvimento)
   - [Como rodar o projeto em ambiente de desenvolvimento](#como-rodar-o-projeto-em-ambiente-de-desenvolvimento)
@@ -253,7 +253,7 @@ executar o projeto usando o Docker".
 }
 ```
 
-#### /carrinho/<codigo> - Obtém todos os dados do carrinho
+#### /carrinho - Obtém todos os dados do carrinho
 
 * Uri: `/carrinho/<codigo>`
 * Método: `GET`
