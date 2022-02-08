@@ -1,0 +1,8 @@
+# Criar carrinho
+curl -X POST http://127.0.0.1:5000/novo
+
+# Adiciona produto
+curl -X POST -F "carrinho=UUID" -F "produto=EF3567942" http://127.0.0.1:5000/produto-adiciona
+
+# Exibe carrinho
+curl http://127.0.0.1:5000/carrinho/UUID
